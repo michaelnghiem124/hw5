@@ -1,0 +1,182 @@
+{
+  "assignment": "MGT 409 HW5 - Problem 4 MCP smoke test",
+  "mcp_server": "campus-customs (mcp_server/server.py, FastMCP)",
+  "database": "data/campus_customs_new.db",
+  "transport": "stdio, as configured in .mcp.json",
+  "how_invoked": "Live MCP client session over stdio against mcp_server/server.py, launched with the exact command and args recorded in .mcp.json at the project root. The server performed a real MCP handshake and advertised its tool list before each call; the tool_output values below are the servers actual MCP responses, not local function calls. Claude Code loads .mcp.json at startup, so the same server also appears as an in-editor tool source after restarting the editor in this project directory.",
+  "captured_at": "2026-11-04T04:58:12.697959+00:00",
+  "tools_advertised_by_server": [
+    "check_product_availability",
+    "check_rent_obligation",
+    "quote_bulk_order"
+  ],
+  "shop_date_today": "2026-08-31",
+  "results": [
+    {
+      "ticket": 101,
+      "prompt_to_vibe_coder": "Ticket 101 is a tee order - Tauhid Zaman wants one Classic Bulldog Tee in size S. Use the MCP server to tell me if we can fill it today, and if not, what is stopping us from restocking it.",
+      "tool_called": "check_product_availability",
+      "arguments": {
+        "sku": "CC-TEE-WHITE",
+        "size": "S",
+        "qty": 1
+      },
+      "tool_output": {
+        "found": true,
+        "as_of": "2026-08-31",
+        "sku": "CC-TEE-WHITE",
+        "name": "Classic Bulldog Tee",
+        "size": "S",
+        "location": "Aisle B",
+        "qty_requested": 1,
+        "qty_on_hand": 0,
+        "can_fill_today": false,
+        "shortfall": 1,
+        "sku_total_all_sizes": 10,
+        "restock": {
+          "vendor_id": 1,
+          "vendor_name": "Bulldog Print Co",
+          "lead_days": 5,
+          "vendor_will_ship": false,
+          "blocking_invoices": [
+            {
+              "invoice_id": 501,
+              "amount": 840.0,
+              "due_date": "2026-08-28",
+              "days_overdue": 3,
+              "description": "Rush reprint CC-TEE-WHITE S"
+            }
+          ],
+          "amount_to_unblock": 840.0
+        }
+      },
+      "verified_against_db": {
+        "inventory CC-TEE-WHITE/S": [
+          {
+            "qty": 0
+          }
+        ],
+        "open invoices vendor 1": [
+          {
+            "id": 501,
+            "amount": 840.0,
+            "due_date": "2026-08-28",
+            "status": "open"
+          }
+        ],
+        "vendor 1 lead_days": [
+          {
+            "name": "Bulldog Print Co",
+            "lead_days": 5
+          }
+        ]
+      }
+    },
+    {
+      "ticket": 102,
+      "prompt_to_vibe_coder": "Ticket 102 is a rent notice from Elm City Properties. Use the MCP server to check the lease and confirm the real rent amount, the real due date, and whether checking can cover it.",
+      "tool_called": "check_rent_obligation",
+      "arguments": {
+        "lease_id": 1
+      },
+      "tool_output": {
+        "found": true,
+        "as_of": "2026-08-31",
+        "lease_id": 1,
+        "space_name": "Chapel Street shop",
+        "landlord": "Elm City Properties",
+        "monthly_rent": 2400.0,
+        "next_due": "2026-09-02",
+        "days_until_due": 2,
+        "is_overdue": false,
+        "checking_balance": 3400.0,
+        "sufficient_funds": true,
+        "balance_after_payment": 1000.0,
+        "already_paid": false
+      },
+      "verified_against_db": {
+        "lease 1": [
+          {
+            "monthly_rent": 2400.0,
+            "next_due": "2026-09-02",
+            "landlord": "Elm City Properties"
+          }
+        ],
+        "checking balance": [
+          {
+            "balance": 3400.0
+          }
+        ],
+        "desk date_today": [
+          {
+            "date_today": "2026-08-31"
+          }
+        ]
+      }
+    },
+    {
+      "ticket": 103,
+      "prompt_to_vibe_coder": "Ticket 103 is the Yale AI Club asking for 20 navy hoodies in size M at a bulk discount. Use the MCP server to price a 15 percent discount and tell me whether we even have the stock to fill it.",
+      "tool_called": "quote_bulk_order",
+      "arguments": {
+        "sku": "CC-HOOD-NAVY",
+        "size": "M",
+        "qty": 20,
+        "proposed_discount_pct": 15.0
+      },
+      "tool_output": {
+        "found": true,
+        "as_of": "2026-08-31",
+        "sku": "CC-HOOD-NAVY",
+        "name": "Basic Hoodie Big Yale",
+        "size": "M",
+        "qty_requested": 20,
+        "qty_on_hand": 8,
+        "shortfall": 12,
+        "can_fill_from_stock": false,
+        "unit_cost": 22.0,
+        "list_price": 58.0,
+        "margin_per_unit_at_list": 36.0,
+        "proposed_discount_pct": 15.0,
+        "proposed_unit_price": 49.3,
+        "margin_per_unit_at_proposed": 27.3,
+        "total_revenue_at_proposed": 986.0,
+        "total_margin_at_proposed": 546.0,
+        "floor_unit_price": 22.0,
+        "max_discount_pct_before_loss": 62.07,
+        "proposed_is_profitable": true,
+        "restock": {
+          "vendor_id": 1,
+          "vendor_name": "Bulldog Print Co",
+          "lead_days": 5,
+          "units_to_order": 12,
+          "restock_cost": 264.0,
+          "vendor_will_ship": false,
+          "blocking_invoices": [
+            {
+              "invoice_id": 501,
+              "amount": 840.0,
+              "due_date": "2026-08-28",
+              "days_overdue": 3,
+              "description": "Rush reprint CC-TEE-WHITE S"
+            }
+          ],
+          "amount_to_unblock": 840.0
+        }
+      },
+      "verified_against_db": {
+        "inventory CC-HOOD-NAVY/M": [
+          {
+            "qty": 8
+          }
+        ],
+        "pricing CC-HOOD-NAVY": [
+          {
+            "unit_cost": 22.0,
+            "list_price": 58.0
+          }
+        ]
+      }
+    }
+  ]
+}

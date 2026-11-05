@@ -1,0 +1,87 @@
+.feed__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-height: 330px;
+  overflow-y: auto;
+  font-size: 11.5px;
+}
+
+.feed__row {
+  --agent: var(--text-dim);
+  display: grid;
+  /* Fixed first three columns so the detail text starts at the same x on every row --
+     a ragged left edge makes a long trail unreadable. */
+  grid-template-columns: 58px 104px 72px 1fr;
+  gap: 8px;
+  align-items: baseline;
+  padding: 4px 0;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.feed__row:last-child {
+  border-bottom: 0;
+}
+
+.feed__time {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-faint);
+}
+
+.feed__agent {
+  font-weight: 700;
+  color: var(--agent);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.feed__kind {
+  font-family: var(--font-mono);
+  font-size: 9.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-faint);
+}
+
+/* The four event kinds that change the state of the shop get a colour; tool calls and
+   reports are the bulk of the trail and stay quiet so these stand out. */
+.feed__kind--delegation {
+  color: var(--yale-blue-light);
+}
+.feed__kind--decision {
+  color: var(--yale-yellow);
+}
+.feed__kind--approval {
+  color: var(--green-bright);
+}
+.feed__kind--error {
+  color: #ff8a8a;
+}
+
+.feed__detail {
+  color: var(--text-dim);
+  line-height: 1.45;
+  word-break: break-word;
+}
+
+.feed__row--approval .feed__detail {
+  color: var(--green-bright);
+}
+
+.feed__row--error .feed__detail {
+  color: #ff8a8a;
+}
+
+.feed__tool {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--yale-blue-light);
+  margin-right: 6px;
+}
+
+.feed__arrow {
+  color: var(--yale-blue-light);
+  margin-right: 6px;
+}

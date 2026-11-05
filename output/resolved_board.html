@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Campus Customs — Resolved Board</title>
+<style>
+  :root {
+    --navy:#0f2544; --navy-2:#1b3a63; --blue:#2e6fb7; --ink:#15202b;
+    --muted:#5d6b7a; --line:#dde4ec; --bg:#eef2f7; --card:#fff;
+    --amber:#b4690e; --amber-bg:#fdf3e3; --green:#1f7a4d; --green-bg:#e8f6ee;
+    --grey-bg:#f2f5f9; --red:#a32b2b; --red-bg:#fbeded;
+  }
+  * { box-sizing:border-box; }
+  body {
+    margin:0; background:var(--bg); color:var(--ink);
+    font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  header {
+    background:linear-gradient(135deg,var(--navy),var(--navy-2));
+    color:#fff; padding:28px 32px 24px;
+  }
+  header h1 { margin:0; font-size:26px; letter-spacing:-.3px; }
+  header p { margin:6px 0 0; color:#b9cbe2; font-size:14px; }
+  .meta { margin-top:14px; display:flex; flex-wrap:wrap; gap:8px; }
+  .meta span {
+    background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.18);
+    padding:4px 11px; border-radius:20px; font-size:12.5px; color:#dce8f5;
+  }
+  main { max-width:1180px; margin:0 auto; padding:30px 24px 70px; }
+  .card {
+    background:var(--card); border:1px solid var(--line); border-radius:10px;
+    padding:22px 26px; margin-bottom:24px; box-shadow:0 1px 3px rgba(15,37,68,.05);
+  }
+  .card h2 {
+    margin:0 0 4px; font-size:19px; color:var(--navy);
+    display:flex; align-items:center; gap:10px; flex-wrap:wrap;
+  }
+  .card h3 {
+    margin:22px 0 10px; font-size:14px; text-transform:uppercase;
+    letter-spacing:.07em; color:var(--muted);
+  }
+  .pill {
+    font-size:11.5px; font-weight:700; text-transform:uppercase; letter-spacing:.05em;
+    padding:3px 10px; border-radius:20px;
+  }
+  .pill.open { background:var(--amber-bg); color:var(--amber); border:1px solid #f0d9ae; }
+  .pill.resolved { background:var(--green-bg); color:var(--green); border:1px solid #b6e0c8; }
+  .pill.blocked { background:var(--red-bg); color:var(--red); border:1px solid #edc4c4; }
+  .sub { color:var(--muted); font-size:14px; margin:0 0 4px; }
+  .summary { margin:12px 0 0; font-size:15px; }
+  table { width:100%; border-collapse:collapse; margin:10px 0 4px; font-size:14.5px; }
+  th {
+    text-align:left; padding:9px 12px; background:var(--grey-bg); color:var(--navy);
+    font-size:12.5px; text-transform:uppercase; letter-spacing:.05em;
+    border-bottom:2px solid var(--line);
+  }
+  td { padding:10px 12px; border-bottom:1px solid var(--line); vertical-align:top; }
+  tr:last-child td { border-bottom:0; }
+  code {
+    background:#eaf0f8; color:var(--navy); padding:1.5px 6px; border-radius:4px;
+    font-size:13px; font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+  }
+  .agent {
+    display:inline-block; font-size:12.5px; font-weight:600; padding:3px 10px;
+    border-radius:5px; margin:2px 3px 2px 0;
+  }
+  .a-boss { background:#e8edf6; color:#2a3f66; }
+  .a-inv  { background:#e4f0fb; color:#1c5a8f; }
+  .a-acc  { background:#e9f4ec; color:#1f6b45; }
+  .a-fac  { background:#f6eee3; color:#8a5a16; }
+  .a-cs   { background:#f2e9f6; color:#6a3d85; }
+  .note {
+    background:var(--amber-bg); border:1px solid #f0dcb4; border-radius:8px;
+    padding:13px 17px; font-size:14px; color:#6b4a14; margin:16px 0 0;
+  }
+  .note.bad { background:var(--red-bg); border-color:#edc4c4; color:#7a2222; }
+  .money { font-variant-numeric:tabular-nums; white-space:nowrap; }
+  .neg { color:var(--red); font-weight:600; }
+  .pos { color:var(--green); font-weight:600; }
+  /* The screenshot is the point of this page, so it gets a frame rather than being
+     dropped inline: the dark dashboard against a light page needs a visible edge. */
+  figure { margin:14px 0 0; }
+  figure img {
+    display:block; width:100%; height:auto; border-radius:10px;
+    border:1px solid #0b1626; background:#0b1017;
+    box-shadow:0 6px 20px rgba(15,37,68,.18);
+  }
+  figcaption { margin-top:9px; font-size:13px; color:var(--muted); }
+  footer { text-align:center; color:var(--muted); font-size:13px; padding:0 0 40px; }
+  ul.tight { margin:8px 0 0; padding-left:20px; }
+  ul.tight li { margin-bottom:6px; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Campus Customs — Resolved Board</h1>
+  <p>MGT 409 Homework 5 &middot; Problem 9 &middot; the React dashboard as it stood after each real run</p>
+  <div class="meta">
+    <span>Shop date: 2026-08-31</span>
+    <span>Runs: 2026-11-05 05:14–05:23 UTC</span>
+    <span>Model: claude-sonnet-4-6</span>
+    <span>Starting checking balance: $3,400.00</span>
+    <span>Ending checking balance: $160.00</span>
+    <span>2 of 3 tickets resolved, 1 blocked on funds</span>
+  </div>
+</header>
+
+<main>
+
+<div class="card">
+  <h2>What this page is</h2>
+  <p class="sub">Double-click the file to open it. Everything here is local; no server needed.</p>
+  <p class="summary">
+    Each panel below is a full-page screenshot of the live React dashboard
+    (<code>localhost:5173</code>) with that ticket selected, captured after all three runs
+    finished and both approvals had been made. The Floor and Live Feed in each shot are
+    replayed from <code>output/audit_trail.json</code>, so the agents, handoffs, tool calls
+    and token counts you see are the real run — not a mockup.
+  </p>
+  <table>
+    <tr><th>Ticket</th><th>Final status</th><th>Agents, in order</th><th>Cash</th><th>Human approval</th></tr>
+    <tr>
+      <td><a href="#t101"><strong>101</strong></a> Bulldog tee</td>
+      <td><span class="pill resolved">Resolved</span></td>
+      <td>inventory &rarr; accounting &rarr; customer_service</td>
+      <td class="money neg">&minus;$840.00</td>
+      <td>Invoice 501 approved</td>
+    </tr>
+    <tr>
+      <td><a href="#t102"><strong>102</strong></a> Rent due</td>
+      <td><span class="pill resolved">Resolved</span></td>
+      <td>facilities &rarr; accounting &rarr; customer_service</td>
+      <td class="money neg">&minus;$2,400.00</td>
+      <td>Rent on lease 1 approved</td>
+    </tr>
+    <tr>
+      <td><a href="#t103"><strong>103</strong></a> Bulk hoodie discount</td>
+      <td><span class="pill blocked">Blocked on funds</span></td>
+      <td>accounting <em>&#8741;</em> inventory, then customer_service</td>
+      <td class="money">$0.00</td>
+      <td>$264.00 PO <strong>refused</strong> (409)</td>
+    </tr>
+  </table>
+  <div class="note">
+    <strong>Why ticket 103 is not resolved.</strong> The three obligations the agents found
+    total $840.00 + $2,400.00 + $264.00 = <strong>$3,504.00</strong> against a $3,400.00
+    opening balance. The shop is $104.00 short in <em>any</em> order, so one obligation had
+    to go unfunded no matter which ticket ran first. Approving 103's restock PO would have
+    driven checking to &minus;$104.00 and broken the no-negative-cash rule, so it was
+    refused rather than paid. <strong>Blocked for a stated reason is the correct outcome
+    here, not a failure</strong> — and the refusal is the clearest evidence in the whole
+    project that the guardrail actually holds.
+  </div>
+</div>
+
+<!-- ============================ TICKET 101 ============================ -->
+<div class="card" id="t101">
+  <h2>Ticket 101 &middot; Bulldog tee <span class="pill resolved">Resolved</span></h2>
+  <p class="sub">customer_order &middot; requested by Tauhid Zaman &middot; run <code>t101-cacda510</code> &middot; 29,354 tokens</p>
+  <p class="summary">
+    Stock on <code>CC-TEE-WHITE</code> size S is zero and the only vendor who can reprint
+    it, Bulldog Print Co, will not ship while invoice #501 ($840.00, 3 days overdue) is
+    open. Accounting checked that paying it still left enough for rent, so the invoice was
+    staged and <strong>a human approved it</strong>. Earliest delivery is roughly
+    2026-09-05 on the vendor's 5-day lead time. A reply to Tauhid is drafted on the board
+    and deliberately unsent.
+  </p>
+  <h3>Who did what</h3>
+  <table>
+    <tr><th>#</th><th>Agent</th><th>Tools called</th><th>Handed off to</th><th>Tokens</th></tr>
+    <tr><td>1</td><td><span class="agent a-inv">inventory</span></td><td><code>check_product_availability</code>, <code>list_vendors</code> &times;2</td><td>accounting</td><td class="money">11,448</td></tr>
+    <tr><td>2</td><td><span class="agent a-acc">accounting</span></td><td><code>get_cash_position</code>, <code>check_rent_obligation</code></td><td>boss</td><td class="money">7,522</td></tr>
+    <tr><td>3</td><td><span class="agent a-cs">customer_service</span></td><td><code>get_ticket_context</code>, <code>check_product_availability</code></td><td>&mdash;</td><td class="money">10,384</td></tr>
+  </table>
+  <p class="sub">Not called: <span class="agent a-fac">facilities</span> — correctly, there is no building issue in this ticket.</p>
+  <h3>Cash</h3>
+  <table>
+    <tr><th>Item</th><th>Amount</th><th>Balance before</th><th>Balance after</th><th>Approved by</th></tr>
+    <tr><td>Invoice 501 — Bulldog Print Co rush reprint</td><td class="money neg">&minus;$840.00</td><td class="money">$3,400.00</td><td class="money">$2,560.00</td><td>Michael Nghiem</td></tr>
+  </table>
+  <p class="sub">Payment row <code>payments.id 1</code> &middot; <code>kind='invoice'</code> &middot; <code>invoices.status</code> flipped to <code>paid</code>, which is what unblocks the vendor for later runs.</p>
+  <figure>
+    <img src="screenshots/ticket-101.png" alt="React dashboard with ticket 101 selected: the agent floor shows inventory, accounting and customer service with their reports, and the resolution panel shows the approved invoice payment.">
+    <figcaption>
+      Dashboard with ticket 101 selected. The Floor replays all three specialists speaking
+      in turn; the Resolution panel shows the $840.00 invoice payment as approved.
+    </figcaption>
+  </figure>
+</div>
+
+<!-- ============================ TICKET 102 ============================ -->
+<div class="card" id="t102">
+  <h2>Ticket 102 &middot; Rent due <span class="pill resolved">Resolved</span></h2>
+  <p class="sub">facilities &middot; notice from Elm City Properties &middot; 20,165 tokens</p>
+  <p class="summary">
+    Facilities matched the landlord's notice against lease 1 line by line — Chapel Street
+    shop, $2,400.00, due 2026-09-02 — and said plainly that rent was
+    <em>approaching but not overdue</em>, which is exactly the trap the ticket sets.
+    Accounting confirmed $2,560.00 covered it and flagged that the $160.00 residual is
+    critically low. <strong>A human approved the rent</strong>; Customer Service drafted an
+    acknowledgment to the landlord.
+  </p>
+  <h3>Who did what</h3>
+  <table>
+    <tr><th>#</th><th>Agent</th><th>Tools called</th><th>Handed off to</th><th>Tokens</th></tr>
+    <tr><td>1</td><td><span class="agent a-fac">facilities</span></td><td><code>check_rent_obligation</code>, <code>get_facilities_obligations</code></td><td>accounting</td><td class="money">6,357</td></tr>
+    <tr><td>2</td><td><span class="agent a-acc">accounting</span></td><td><code>check_rent_obligation</code>, <code>get_cash_position</code></td><td>boss</td><td class="money">7,400</td></tr>
+    <tr><td>3</td><td><span class="agent a-cs">customer_service</span></td><td><code>get_ticket_context</code></td><td>&mdash;</td><td class="money">6,408</td></tr>
+  </table>
+  <p class="sub">Not called: <span class="agent a-inv">inventory</span>. The third hop to Customer Service was <strong>not predicted</strong> in the Expected section — see the Ticket 102 tab of <code>desk_tickets.html</code>.</p>
+  <h3>Cash</h3>
+  <table>
+    <tr><th>Item</th><th>Amount</th><th>Balance before</th><th>Balance after</th><th>Approved by</th></tr>
+    <tr><td>Monthly rent — lease 1, Elm City Properties</td><td class="money neg">&minus;$2,400.00</td><td class="money">$2,560.00</td><td class="money">$160.00</td><td>Michael Nghiem</td></tr>
+  </table>
+  <p class="sub">Payment row <code>payments.id 2</code> &middot; <code>kind='rent'</code> &middot; no <code>leases</code> column is touched: the payment row <em>is</em> the flag, and rolling <code>next_due</code> forward would invent next month's obligation.</p>
+  <figure>
+    <img src="screenshots/ticket-102.png" alt="React dashboard with ticket 102 selected: facilities, accounting and customer service desks with their reports, and the approved rent payment in the resolution panel.">
+    <figcaption>
+      Dashboard with ticket 102 selected. Facilities leads, Accounting re-verifies the rent
+      obligation rather than trusting the handoff, and the $2,400.00 rent shows as approved.
+    </figcaption>
+  </figure>
+</div>
+
+<!-- ============================ TICKET 103 ============================ -->
+<div class="card" id="t103">
+  <h2>Ticket 103 &middot; Bulk hoodie discount <span class="pill blocked">Blocked on funds</span></h2>
+  <p class="sub">pricing &middot; requested by Yale AI Club &middot; 30,138 tokens &middot; derived status <code>awaiting_approval</code></p>
+  <p class="summary">
+    Accounting priced a 15% bulk discount at $49.30/unit, $986.00 for 20 units, holding a
+    47% gross margin — acceptable, and recommended. Inventory found only 8 of the 20 units
+    on hand and a 12-unit shortfall needing a $264.00 restock PO from Bulldog Print Co
+    (now unblocked, since ticket 101 cleared its invoice). <strong>That PO is where the
+    ticket stops.</strong> Checking holds $160.00. The discount stands at the manager
+    level, the customer draft is ready, and the full order ships together once the account
+    is replenished.
+  </p>
+  <h3>Who did what</h3>
+  <table>
+    <tr><th>#</th><th>Agent</th><th>Tools called</th><th>Handed off to</th><th>Tokens</th></tr>
+    <tr><td>1a</td><td><span class="agent a-acc">accounting</span></td><td><code>quote_bulk_order</code> &times;2, <code>get_cash_position</code></td><td>boss</td><td class="money">12,232</td></tr>
+    <tr><td>1b</td><td><span class="agent a-inv">inventory</span></td><td><code>check_product_availability</code>, <code>list_vendors</code></td><td>&mdash;</td><td class="money">7,321</td></tr>
+    <tr><td>2</td><td><span class="agent a-cs">customer_service</span></td><td><code>get_ticket_context</code>, <code>check_product_availability</code></td><td>&mdash;</td><td class="money">10,585</td></tr>
+  </table>
+  <p class="sub">
+    Not called: <span class="agent a-fac">facilities</span>. The <code>1a</code>/<code>1b</code>
+    labels are not cosmetic — the two <code>delegation</code> events are stamped
+    <code>05:21:37.379</code> and <code>05:21:37.381</code>, <strong>2 ms apart</strong>, so
+    the Boss fanned out in parallel instead of chaining. There was
+    <strong>no agent-to-agent handoff at all</strong> on this ticket; every report came back
+    to the Boss. That is the sharpest Expected-vs-Actual divergence in the project.
+  </p>
+  <h3>What the shop refused</h3>
+  <table>
+    <tr><th>Request</th><th>Amount</th><th>Response</th><th>Balance after</th><th>Why</th></tr>
+    <tr>
+      <td>Restock PO — 12&times; <code>CC-HOOD-NAVY</code> M</td>
+      <td class="money">$264.00</td>
+      <td><code>409</code></td>
+      <td class="money">$160.00 <span class="pos">unchanged</span></td>
+      <td>$104.00 short. The balance floor is a database predicate (<code>WHERE balance &gt;= ?</code>), so no stale read can slip past it.</td>
+    </tr>
+    <tr>
+      <td>Duplicate PO the agent staged a second time</td>
+      <td class="money">$0.00</td>
+      <td><code>422</code></td>
+      <td class="money">$160.00 <span class="pos">unchanged</span></td>
+      <td>Amount must be greater than zero — cash only ever leaves this shop, never enters through this route.</td>
+    </tr>
+  </table>
+  <div class="note bad">
+    <strong>A real defect, left visible.</strong> The $0.00 purchase order is a genuine
+    agent error — Inventory staged the same PO twice and the second copy carried no amount.
+    It is not filtered out of the board or the trail, because the honest record of a run
+    includes what the agents got wrong. The route rejected it at the schema boundary, which
+    is where that class of mistake should die.
+  </div>
+  <figure>
+    <img src="screenshots/ticket-103.png" alt="React dashboard with ticket 103 selected: accounting and inventory running in parallel, and the resolution panel showing the purchase order with a disabled approve button reading insufficient funds.">
+    <figcaption>
+      Dashboard with ticket 103 selected. The approve button on the $264.00 purchase order
+      is disabled and reads <em>Insufficient funds</em> — the guardrail is visible in the UI
+      before the request is ever sent, and enforced again server-side if it is.
+    </figcaption>
+  </figure>
+</div>
+
+<!-- ============================ RECONCILIATION ============================ -->
+<div class="card">
+  <h2>Reconciliation</h2>
+  <p class="sub">The board's arithmetic against the working database, after all three runs.</p>
+  <table>
+    <tr><th>#</th><th>Event</th><th>Change</th><th>Balance</th></tr>
+    <tr><td>0</td><td>Opening balance after <code>POST /reset</code></td><td class="money">&mdash;</td><td class="money">$3,400.00</td></tr>
+    <tr><td>1</td><td>Ticket 101 — invoice 501 approved</td><td class="money neg">&minus;$840.00</td><td class="money">$2,560.00</td></tr>
+    <tr><td>2</td><td>Ticket 102 — rent on lease 1 approved</td><td class="money neg">&minus;$2,400.00</td><td class="money">$160.00</td></tr>
+    <tr><td>3</td><td>Ticket 103 — $264.00 PO refused, nothing written</td><td class="money">$0.00</td><td class="money">$160.00</td></tr>
+    <tr><td></td><td><strong>Ending balance</strong></td><td class="money neg"><strong>&minus;$3,240.00</strong></td><td class="money"><strong>$160.00</strong></td></tr>
+  </table>
+  <h3>Verified against the database, not asserted</h3>
+  <table>
+    <tr><th>Check</th><th>Expected</th><th>Actual</th><th></th></tr>
+    <tr><td><code>cash_accounts.balance</code> where <code>name='checking'</code></td><td class="money">160.0</td><td class="money">160.0</td><td class="pos">match</td></tr>
+    <tr><td><code>SUM(payments.amount)</code></td><td class="money">3240.0</td><td class="money">3240.0</td><td class="pos">match</td></tr>
+    <tr><td><code>COUNT(payments)</code></td><td>2</td><td>2</td><td class="pos">match</td></tr>
+    <tr><td><code>invoices.status</code> for 501</td><td><code>paid</code></td><td><code>paid</code></td><td class="pos">match</td></tr>
+  </table>
+  <div class="note">
+    <strong>Only one file in the repository can write.</strong>
+    <code>grep -rl "INSERT INTO\|UPDATE " backend/ mcp_server/ --include="*.py"</code>
+    returns <code>backend/main.py</code> and nothing else, and the MCP server opens SQLite
+    as <code>file:&hellip;?mode=ro</code>. The agents are structurally incapable of moving
+    money; every dollar above left the account through a human clicking approve.
+  </div>
+  <h3>Where the rest of the record lives</h3>
+  <ul class="tight">
+    <li><code>output/desk_tickets.html</code> — Expected vs. Actual per ticket, plus the full Cash tab</li>
+    <li><code>output/resolved_tickets.json</code> — machine-readable: status, outcome, per-agent contribution, approvals</li>
+    <li><code>output/audit_trail.json</code> — 54 events across the three runs, including the two <code>human &middot; approval</code> entries</li>
+    <li><code>output/harness.md</code> — tables, MCP tools, agents, routes, dashboard, safety rules</li>
+  </ul>
+</div>
+
+</main>
+
+<footer>Campus Customs agent desk &middot; MGT 409 Homework 5 &middot; Problem 9</footer>
+
+</body>
+</html>

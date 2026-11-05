@@ -1,0 +1,22 @@
+# One install for the whole Python side. The backend and the MCP server share a
+# single .venv because the backend launches the server as a subprocess over
+# stdio (see .mcp.json) using that same interpreter — two environments would
+# mean the agents could not reach their tools.
+#
+#   python3 -m venv .venv && .venv/bin/pip install -r requirements.txt
+#
+# Python 3.11+. Developed on 3.14.7.
+
+fastapi
+uvicorn[standard]
+pydantic
+python-dotenv
+
+# The agent layer. The `anthropic` and `openai` extras cover both providers in
+# models.py — gpt-6-luna goes through Portkey, which speaks the OpenAI protocol.
+# The `mcp` extra is what lets an agent mount the tool server.
+pydantic-ai-slim[anthropic,openai,mcp]>=1.0.0
+
+# The tool server itself. Also used by the Problem 4 smoke test, which talks to
+# it in-process rather than over stdio.
+fastmcp>=4.1.6

@@ -1,0 +1,49 @@
+# ---------------------------------------------------------------------------
+# HW5 is its own repository, rooted at this folder — so a grader's clone has
+# data/, backend/, mcp_server/, frontend/ and output/ at the top level, which is
+# where the assignment says to look for them.
+#
+# NOTE FOR ANYONE COMING FROM HW4: that project ignores `data/` and every `*.db`
+# outright, because its database holds real email addresses and password hashes.
+# This one does the opposite on purpose. Campus Customs' data is entirely
+# fictional, and the grader has to run the shop — so BOTH database files are
+# committed deliberately:
+#
+#   data/campus_customs.db       pristine reference; the reset source
+#   data/campus_customs_new.db   the working copy the agents read
+#
+# Do not add `*.db` here. It would silently break a fresh clone.
+# ---------------------------------------------------------------------------
+
+# Secrets. The real .env carries ANTHROPIC_API_KEY / PORTKEY_API_KEY.
+.env
+.env.local
+.env.*.local
+# .env.example IS committed — placeholders only, and the assignment requires it.
+!.env.example
+
+# Python
+.venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Node / Vite. `frontend/dist` is a build artifact; `npm run build` regenerates it.
+node_modules/
+dist/
+*.local
+
+# Editors / OS
+.DS_Store
+.idea/
+.vscode/
+
+# ---------------------------------------------------------------------------
+# Deliberately NOT ignored, in case a future cleanup is tempted:
+#
+#   output/screenshots/*.png   ~4.4 MB of dashboard captures that
+#                              output/resolved_board.html embeds by relative
+#                              path. Drop them and that page renders empty.
+#   output/audit_trail.json    the 54-event record of the Problem 9 run. It is
+#                              evidence, not a log file.
+# ---------------------------------------------------------------------------

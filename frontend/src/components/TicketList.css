@@ -1,0 +1,92 @@
+.queue__body {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.ticket {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 11px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-soft);
+  border-left: 3px solid transparent;
+  background: var(--surface);
+  cursor: pointer;
+  transition:
+    border-color 0.18s,
+    background 0.18s;
+}
+
+.ticket:hover {
+  background: var(--surface-raised);
+}
+
+.ticket.is-selected {
+  border-left-color: var(--yale-yellow);
+  background: var(--surface-raised);
+}
+
+.ticket__head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.ticket__id {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--yale-blue-light);
+}
+
+.ticket__subject {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 14.5px;
+  line-height: 1.3;
+  color: var(--text);
+}
+
+.ticket__meta {
+  margin: 0;
+  font-size: 11px;
+  color: var(--text-faint);
+}
+
+.ticket__outcome {
+  margin: 3px 0 0;
+  font-size: 11.5px;
+  line-height: 1.45;
+  color: var(--text-dim);
+  padding-left: 8px;
+  border-left: 1px solid var(--border);
+}
+
+.ticket__foot {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-top: 4px;
+}
+
+.ticket__db {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-faint);
+}
+
+.ticket__badge {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--bg-deep);
+  background: var(--yale-yellow);
+  border-radius: 99px;
+  padding: 1px 7px;
+}
+
+.ticket__run {
+  margin-left: auto;
+}

@@ -1,0 +1,27 @@
+/* The two tones every persona is built from. `currentColor` resolves to the agent's own
+   colour, which the parent sets, so one variable still drives the whole figure. */
+.avatar {
+  color: var(--agent);
+  display: block;
+  flex: 0 0 auto;
+}
+
+.avatar .ink {
+  fill: var(--bg-deep);
+}
+
+.avatar .lite {
+  fill: currentColor;
+}
+
+.avatar .stroke-lite {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+}
+
+.avatar .stroke-ink {
+  fill: none;
+  stroke: var(--bg-deep);
+  stroke-linecap: round;
+}

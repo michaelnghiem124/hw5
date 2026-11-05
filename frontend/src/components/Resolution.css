@@ -1,0 +1,129 @@
+.resolution__body {
+  display: flex;
+  flex-direction: column;
+  gap: 13px;
+}
+
+.resolution__error {
+  margin: 0;
+  padding: 9px 11px;
+  border-radius: var(--radius-sm);
+  border: 1px solid #6d2525;
+  background: rgba(140, 40, 40, 0.18);
+  color: #ffb3b3;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.resolution__outcome {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text);
+}
+
+.resolution__facts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 22px;
+  margin: 0;
+  padding: 10px 0;
+  border-top: 1px solid var(--border-soft);
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.resolution__facts dt {
+  margin-bottom: 3px;
+}
+
+.resolution__facts dd {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  color: var(--text);
+}
+
+.resolution__block {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.contribs {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+
+.contrib {
+  --agent: var(--text-dim);
+  display: flex;
+  gap: 9px;
+  align-items: flex-start;
+}
+
+.contrib__badge {
+  flex: 0 0 auto;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 9.5px;
+  font-weight: 800;
+  color: var(--bg-deep);
+  background: var(--agent);
+}
+
+/* Same bubble as the floor's, but tailed on the left rather than on top: here the avatar
+   sits beside the text instead of above it, so the tail has to point sideways at it. */
+.contrib__said {
+  position: relative;
+  min-width: 0;
+  padding: 8px 11px;
+  border-radius: 11px;
+  background: color-mix(in srgb, var(--agent) 7%, var(--bg));
+  border: 1px solid color-mix(in srgb, var(--agent) 30%, var(--border-soft));
+}
+
+.contrib__said::before {
+  content: "";
+  position: absolute;
+  top: 10px;
+  left: -5px;
+  width: 8px;
+  height: 8px;
+  background: color-mix(in srgb, var(--agent) 7%, var(--bg));
+  border-left: 1px solid color-mix(in srgb, var(--agent) 30%, var(--border-soft));
+  border-bottom: 1px solid color-mix(in srgb, var(--agent) 30%, var(--border-soft));
+  transform: rotate(45deg);
+}
+
+.contrib__name {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--agent);
+}
+
+.contrib__text {
+  margin: 2px 0 0;
+  font-size: 12px;
+  line-height: 1.55;
+  color: var(--text-dim);
+}
+
+.resolution__message {
+  margin: 0;
+  padding: 11px 13px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-soft);
+  border-left: 3px solid var(--agent-customer_service);
+  background: var(--bg);
+  font-size: 12px;
+  line-height: 1.65;
+  color: var(--text-dim);
+  white-space: pre-wrap;
+}

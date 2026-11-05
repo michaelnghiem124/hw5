@@ -1,0 +1,297 @@
+.floor__body {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.floor__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 11.5px;
+  color: var(--text-faint);
+  font-variant-numeric: tabular-nums;
+}
+
+.floor__status.is-live {
+  color: var(--yale-yellow);
+}
+
+.floor__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--yale-yellow);
+  animation: pulse-dot 1.4s ease-in-out infinite;
+}
+
+@keyframes pulse-dot {
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 0 0 rgba(255, 213, 90, 0.5);
+  }
+  50% {
+    opacity: 0.55;
+    box-shadow: 0 0 0 6px rgba(255, 213, 90, 0);
+  }
+}
+
+/* The line from the Boss down to the specialist row: every handoff goes through it. */
+.floor__wire {
+  height: 18px;
+  margin-left: 26px;
+  border-left: 2px solid var(--border);
+  position: relative;
+}
+
+.floor__wire::after {
+  content: "";
+  position: absolute;
+  left: -2px;
+  bottom: 0;
+  width: 60%;
+  border-bottom: 2px solid var(--border);
+  border-bottom-left-radius: 8px;
+}
+
+.floor__specialists {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(236px, 1fr));
+  gap: 10px;
+}
+
+/* -------------------------------------------------------------------------- */
+
+.desk {
+  --agent: var(--text-dim);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-soft);
+  background: var(--surface);
+  /* The agent's colour as a left rule: identifiable without a legend. */
+  border-left: 3px solid var(--agent);
+  transition:
+    opacity 0.25s,
+    background 0.25s,
+    box-shadow 0.25s;
+}
+
+.desk--idle {
+  opacity: 0.4;
+  border-left-color: var(--border);
+}
+
+.desk--working {
+  background: var(--surface-raised);
+  box-shadow: 0 0 0 1px color-mix(in srgb, var(--agent) 35%, transparent);
+}
+
+.desk__head {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+}
+
+.desk__avatar {
+  position: relative;
+  flex: 0 0 auto;
+  width: 34px;
+  height: 34px;
+}
+
+/* A small bob while the agent is working, in step with the typing dots. */
+.desk--working .desk__avatar .avatar {
+  animation: bob 1.6s ease-in-out infinite;
+}
+
+@keyframes bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-2px);
+  }
+}
+
+.desk__pulse {
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  border: 2px solid var(--agent);
+  animation: halo 1.6s ease-out infinite;
+  pointer-events: none;
+}
+
+@keyframes halo {
+  0% {
+    transform: scale(0.85);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1.45);
+    opacity: 0;
+  }
+}
+
+.desk__id {
+  min-width: 0;
+  flex: 1;
+}
+
+.desk__name {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: 14px;
+  color: var(--agent);
+}
+
+.desk__blurb {
+  margin: 1px 0 0;
+  font-size: 10.5px;
+  color: var(--text-faint);
+  line-height: 1.35;
+}
+
+.desk__seat {
+  flex: 0 0 auto;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text-faint);
+  border: 1px solid var(--border);
+  border-radius: 99px;
+  padding: 1px 6px;
+}
+
+.desk__idle {
+  margin: 0;
+  font-size: 11.5px;
+  font-style: italic;
+  color: var(--text-faint);
+}
+
+/* A speech bubble, because the brief is a team you can watch talking. Tinted with the
+   agent's own colour and tailed at x=17px, which is exactly the centre of the avatar
+   above it -- so the bubble visibly belongs to that character rather than to the card. */
+.desk__bubble {
+  position: relative;
+  background: color-mix(in srgb, var(--agent) 7%, var(--bg));
+  border: 1px solid color-mix(in srgb, var(--agent) 30%, var(--border-soft));
+  border-radius: 11px;
+  padding: 9px 12px;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--text);
+  transform-origin: 17px top;
+  animation: bubble-in 0.22s ease-out;
+}
+
+.desk__says {
+  max-height: 128px;
+  overflow-y: auto;
+}
+
+/* Grows out of the tail, the way a comic bubble is read as being emitted. */
+@keyframes bubble-in {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.desk__bubble::before {
+  content: "";
+  position: absolute;
+  top: -5px;
+  left: 13px;
+  width: 8px;
+  height: 8px;
+  background: color-mix(in srgb, var(--agent) 7%, var(--bg));
+  border-left: 1px solid color-mix(in srgb, var(--agent) 30%, var(--border-soft));
+  border-top: 1px solid color-mix(in srgb, var(--agent) 30%, var(--border-soft));
+  transform: rotate(45deg);
+}
+
+.desk__typing {
+  display: inline-flex;
+  gap: 3px;
+  margin-left: 6px;
+  vertical-align: middle;
+}
+
+.desk__typing i {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--agent);
+  animation: typing 1.1s ease-in-out infinite;
+}
+.desk__typing i:nth-child(2) {
+  animation-delay: 0.16s;
+}
+.desk__typing i:nth-child(3) {
+  animation-delay: 0.32s;
+}
+
+@keyframes typing {
+  0%,
+  60%,
+  100% {
+    opacity: 0.25;
+    transform: translateY(0);
+  }
+  30% {
+    opacity: 1;
+    transform: translateY(-3px);
+  }
+}
+
+.desk__foot {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 5px;
+  min-height: 19px;
+}
+
+.desk__tool {
+  font-family: var(--font-mono);
+  font-size: 10px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.045);
+  border: 1px solid var(--border-soft);
+  color: var(--text-dim);
+}
+
+.desk__tool--live {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  color: var(--agent);
+  border-color: var(--agent);
+}
+
+.desk__spark {
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--agent);
+  animation: pulse-dot 0.9s ease-in-out infinite;
+}
+
+.desk__tokens {
+  margin-left: auto;
+  font-family: var(--font-mono);
+  font-size: 10px;
+  color: var(--text-faint);
+}

@@ -1,0 +1,91 @@
+/* Layout shell only; everything visual lives in theme.css and the component sheets. */
+
+.desk {
+  max-width: 1480px;
+  margin: 0 auto;
+  padding: 22px 26px 46px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.masthead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border-soft);
+}
+
+.masthead__title {
+  margin: 2px 0 0;
+  font-family: var(--font-display);
+  font-size: 30px;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  line-height: 1.1;
+}
+
+.masthead__sub {
+  margin: 4px 0 0;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  color: var(--text-faint);
+}
+
+.masthead__cash {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 7px;
+}
+
+.masthead__paid {
+  margin: 0;
+  font-size: 10.5px;
+  color: var(--text-faint);
+  font-variant-numeric: tabular-nums;
+}
+
+.masthead__reset {
+  font-size: 11px;
+  padding: 5px 11px;
+}
+
+.desk__fatal {
+  margin: 0;
+  padding: 11px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid #6d2525;
+  background: rgba(140, 40, 40, 0.2);
+  color: #ffb3b3;
+  font-size: 12.5px;
+  line-height: 1.5;
+}
+
+/* Queue and approvals on the left because they are the two things a human acts on; the
+   floor, the write-up and the trail on the right because they are what a human reads. */
+.desk__grid {
+  display: grid;
+  grid-template-columns: minmax(300px, 380px) minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.desk__col {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  min-width: 0;
+}
+
+@media (max-width: 1040px) {
+  .desk__grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .desk {
+    padding: 18px 16px 40px;
+  }
+}
